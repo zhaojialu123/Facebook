@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size() < 2)
+            return nums.size();
+        priority_queue<int, vector<int>, greater<int>> pq;
+        for(int i: nums)
+        {
+            pq.push(i);
+        }
+        
+        int counter = 1;
+        int prev = pq.top();
+        pq.pop();
+        int res = 0;
+        while(!pq.empty())
+        {
+            int curr = pq.top();
+            pq.pop();
+            if(curr == prev + 1)
+            {
+               counter++;
+                prev = curr;
+            }
+            else if(curr != prev)
+            {
+                counter = 1;
+                prev = curr;
+            }
+            
+            res = max(res, counter);
+                
+        }
+        
+        return res;
+    }
+};
