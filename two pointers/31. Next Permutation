@@ -1,0 +1,43 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int first = -1;
+        for(int i = nums.size() -1; i > 0; i--)
+        {
+            if(nums[i] > nums[i-1])
+            {
+                first = i-1;
+                break;
+            }
+        }
+        
+        if(first == -1)
+        {
+          reverse(nums.begin(), nums.end());
+            return;
+        }
+        
+        int val = INT_MAX;
+        int index;
+        for(int i = first + 1; i < nums.size(); i++)
+        {
+            if(nums[i] > nums[first] && nums[i] < val)
+            {
+                index = i;
+                val = nums[i];
+            }
+                
+        }
+        
+        swap(nums, first, index);
+        sort(nums.begin() + first + 1, nums.end());
+        
+    }
+    
+    void swap(vector<int>& nums, int first, int index)
+    {
+        int temp = nums[first];
+        nums[first] = nums[index];
+        nums[index] = temp;
+    }
+};
