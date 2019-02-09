@@ -1,0 +1,138 @@
+Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+
+Note: The input string may contain letters other than the parentheses ( and ).
+
+Example 1:
+
+Input: "()())()"
+Output: ["()()()", "(())()"]
+Example 2:
+
+Input: "(a)())()"
+Output: ["(a)()()", "(a())()"]
+Example 3:
+
+Input: ")("
+Output: [""]
+
+
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        int l = 0;
+        int r = 0;
+        
+        for(int i = 0; i < s.size(); i++)
+        {
+            if(s[i] == '(')
+                l++;
+            else if(s[i] == ')')
+            {
+                if(l == 0)
+                    r++;
+                else
+                    l--;
+            }
+        }
+        vector<string> res;
+        dfs(res, s, l, r, 0);
+        
+        return res;
+    }
+    
+    bool vaild(string s)
+    {
+        int counter = 0;
+        for(int i = 0; i < s.size(); i++)
+        {
+            if(s[i] == '(')
+                counter++;
+            else if(s[i] == ')')
+                counter--;
+            if(counter < 0)
+                return false;
+        }
+        
+        if(counter == 0)
+            return true;
+        else
+            return false;
+    }
+    void dfs(vector<string>& res, string& s, int l, int r, int start)
+    {
+        if(l == 0 && r == 0)
+        {
+            if(vaild(s))
+                res.push_back(s);
+            return;
+        }
+        
+        for(int i = start; i < s.size(); i++)
+        {
+            if(i != start && s[i] == s[i-1])
+            continue;
+            
+            string helper = s;
+            helper.erase(i,1);
+            
+            if(l > 0 && s[i] == '(')
+                dfs(res, helper, l-1, r, i);
+            if(r > 0 && s[i] == ')')
+                dfs(res, helper, l, r -1, i);
+        }
+        
+        
+    }
+};
+
+
+
+Follow up: only return one result 
+
+Method: scan twice forward and backward 
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        int l = 0;
+        int i = 0;
+        while(i < s.size())
+        {
+            if(s[i] == '(')
+                l++;
+            else if(s[i] == ')')
+            {
+                if(l == 0)
+                {
+                    s.erase(i,1);
+                    i--;
+                }
+                else
+                    l--;
+            }
+            i++;
+        }
+        
+
+        int r = 0;
+        int j = s.size() - 1;
+        while(j >= 0)
+        {
+            if(s[j] == ')')
+                r++;
+            else if(s[j] == '(')
+            {
+                if(r == 0)
+                {
+                    s.erase(j,1);
+                    j++;
+                }
+                else
+                    r--;
+            }
+            j--;
+        }
+        
+        
+        return s;
+    }
+};
