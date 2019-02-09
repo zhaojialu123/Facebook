@@ -1,0 +1,60 @@
+Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+
+Note:
+
+The solution set must not contain duplicate quadruplets.
+
+Example:
+
+Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        set<vector<int>> res;
+        vector<vector<int>> ans;
+        if(nums.size() < 4)
+            return ans;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < nums.size() - 3; i++)
+        {
+            for(int j = i+1; j < nums.size() - 2; j++)
+            {
+                int start = j+1;
+                int end = nums.size() -1;
+                while(start < end)
+                {
+                    if(nums[start] + nums[end] + nums[i] + nums[j] == target)
+                    {
+                        vector<int> helper;
+                        helper.push_back(nums[i]);
+                        helper.push_back(nums[j]);
+                        helper.push_back(nums[start]);
+                        helper.push_back(nums[end]);
+                        res.insert(helper);
+                        start++;
+                        end--;
+                        
+                    }
+                    else if(nums[start] + nums[end] + nums[i] + nums[j] < target)
+                        start++;
+                    else
+                        end--;
+                }
+            }
+        }
+      
+        for(vector<int> v: res)
+            ans.push_back(v);
+        
+        return ans;
+    }
+};
