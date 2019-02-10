@@ -1,0 +1,54 @@
+class Solution {
+public:
+    
+    int findKthLargest(vector<int>& nums, int k) {
+        // quick sort 
+        int start = 0;
+        int end = nums.size() -1;
+        while(true)
+        {
+           int index = quick_sort(nums, start, end);
+           if(index == k - 1)
+                return nums[index];
+            else if(index < k - 1)
+            {
+                start = index + 1; 
+            }
+            else
+            {
+                end = index - 1;
+            } 
+        }
+        
+            
+        
+    }
+    int quick_sort(vector<int>& nums, int start, int end)
+    {
+        int pivot = nums[start];
+        int index = start;
+        start++;
+        while(start <= end)
+        {
+            if(nums[start] < pivot && nums[end] > pivot)
+            {
+                swap(nums, start, end);
+                start++;
+                end--; 
+            }
+            else if(nums[start] >= pivot)
+                start++;
+            else if(nums[start] <= pivot)
+                end--;
+        }
+    
+        swap(nums, end, index);
+        return end;
+    }
+    void swap(vector<int>& nums, int i, int j)
+    {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+};
