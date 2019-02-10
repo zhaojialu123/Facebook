@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isMonotonic(vector<int>& A) {
+        bool decreasing = false;
+        bool increasing = false;
+        
+        for(int i = 0; i < A.size() - 1; i++)
+        {
+            if(A[i] < A[i+1])
+            {
+                if(decreasing)
+                    return false;
+                else
+                    increasing = true;
+            }
+            else if(A[i] > A[i+1])
+            {
+                if(increasing)
+                    return false;
+                else
+                    decreasing = true;
+            }
+            else
+                continue;
+        }
+        
+        return true;
+    }
+};
