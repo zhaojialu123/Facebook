@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        bool positive = true;
+        
+        if((dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0))
+            positive = false;
+        
+        long ldividend = abs((long)dividend);
+        long ldivisor = abs((long)divisor);
+        
+        if(ldividend == 0 || ldividend < ldivisor)
+            return 0;
+        
+        long res = divide(ldividend, ldivisor);
+        
+        if(res > INT_MAX)
+        {
+            if(positive)
+                return INT_MAX;
+            else
+                return INT_MIN;
+        }
+        else
+        {
+            if(positive)
+                return (int)res;
+            else
+                return 0 - (int)res;
+        }
+    }
+    
+    long divide(long ldividend, long ldivisor)
+    {
+        if(ldividend < ldivisor)
+            return 0;
+        long sum = ldivisor;
+        long multiple = 1;
+        while(sum + sum <= ldividend)
+        {
+            sum = sum + sum;
+            multiple = multiple + multiple;
+        }
+        
+        return multiple + divide(ldividend - sum, ldivisor);
+    }
+};
+
+
+Note: int -> long and recursive divide function 
