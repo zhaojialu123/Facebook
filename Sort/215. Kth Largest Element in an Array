@@ -52,3 +52,6 @@ public:
         nums[j] = temp;
     }
 };
+
+Follow up: 
+Time complextiy: O(N)
