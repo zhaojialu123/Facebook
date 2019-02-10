@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    struct result_type
+    {
+        int single_path;
+        int max_path;
+        
+        result_type(int single, int maxi):single_path(single), max_path(maxi)
+        {
+            
+        }
+        
+        result_type helper(TreeNode* root)
+        {
+            if(root == NULL)
+            {
+                return result_type(0, INT_MIN);
+            }
+            
+            result_type left = helper(root -> left);
+            result_type right = helper(root -> right);
+            
+            int single = max(left.single_path, right.single_path) + root -> val;
+            single = max(0, single);
+            
+            int maxi = max(left.max_path, right.max_path);
+            maxi = max(maxi, left.single_path + right.single_path + root -> val);
+            
+            return result_type(single, maxi);
+        }
+    };
+    int maxPathSum(TreeNode* root) {
+        result_type re = re.helper(root);
+        return re.max_path;
+    }
+};
