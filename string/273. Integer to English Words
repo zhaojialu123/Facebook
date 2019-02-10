@@ -1,0 +1,42 @@
+class Solution {
+     vector<string> less = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"};
+        vector<string> tenth = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+        vector<string> thousand = {"", "Thousand", "Million", "Billion"};
+public:
+    string numberToWords(int num) {
+        if(num == 0)
+            return "Zero";
+        string res = "";
+        int i = 0;
+        while(num > 0)
+        {
+            if(num % 1000 != 0)
+            {
+                res = helper(num % 1000) + thousand[i] + " " + res;
+            }
+            num = num/1000;
+            i++;
+        }
+        
+        while(res[res.size() -1] == ' ')
+            res.pop_back();
+        return res;
+    }
+    string helper(int num)
+    {
+        if(num == 0)
+            return "";
+        if(num < 20)
+        {
+            return less[num] + " ";
+        }
+        else if(num < 100)
+        {
+            return tenth[num/10] + " " + helper(num%10);
+        }
+        else 
+        {
+            return less[num/100] + " Hundred " + helper(num%100);
+        }
+    }
+};
