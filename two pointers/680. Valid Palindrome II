@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool validPalindrome(string s) {
+        int start = 0;
+        int end = s.size() - 1;
+        
+        while(start < end)
+        {
+            if(s[start] == s[end])
+            {
+                start++;
+                end--;
+            }
+            else
+                
+                return valid(s.substr(start, end - start)) || valid(s.substr(start + 1, end - start));
+        }
+        
+        return true;
+    }
+    
+    bool valid(string s)
+    {
+        int start = 0;
+        int end = s.size() - 1;
+        while(start < end)
+        {
+            if(s[start] != s[end])
+                return false;
+            start++;
+            end--;
+        }
+        
+        return true;
+    }
+};
