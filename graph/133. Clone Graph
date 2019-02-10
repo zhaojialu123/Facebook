@@ -32,3 +32,6 @@ public:
         return copy;
     }
 };
+
+
+// 变形：Deep copy binary tree
