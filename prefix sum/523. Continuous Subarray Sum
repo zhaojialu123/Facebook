@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        int sum = 0;
+        map<int, int> dict;
+        dict[0] = -1;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            sum = sum + nums[i];
+            if(k != 0)
+                sum = sum % k;
+            if(dict.count(sum))
+            {
+                if(i - dict[sum] > 1)
+                    return true;
+            }
+            else
+                dict[sum] = i;
+        }
+        
+        return false;
+    }
+};
