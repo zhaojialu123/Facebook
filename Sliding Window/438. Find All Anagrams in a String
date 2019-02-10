@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+       vector<int> res;
+        if(s.size() == 0 || p.size() == 0)
+            return res;
+        
+        vector<int> dict(128,0);
+        int start = 0;
+        int counter = p.size();
+        for(int i = 0; i < p.size(); i++)
+        {
+            dict[p[i]]++;
+        }
+        
+        for(int end = 0; end < s.size(); end++)
+        {
+            if(dict[s[end]]-- > 0)
+            {
+                counter--;
+            }
+            
+            while(counter == 0)
+            {
+                if(end-start+1 == p.size())
+                    res.push_back(start);
+                
+                if(dict[s[start]]++ == 0)
+                {
+                    counter++;
+                }
+                start++;
+            }
+        }
+        
+        return res;
+    }
+};
