@@ -1,0 +1,65 @@
+class Solution {
+public:
+    void wallsAndGates(vector<vector<int>>& rooms) {
+        queue<vector<int>> gates;
+        for(int i = 0; i < rooms.size(); i++)
+        {
+            for(int j = 0; j < rooms[0].size(); j++)
+            {
+                if(rooms[i][j] == 0)
+                {
+                    vector<int> helper;
+                    helper.push_back(i);
+                    helper.push_back(j);
+                    gates.push(helper);
+                }
+            }
+        }
+        
+        while(!gates.empty())
+        {
+            int size = gates.size();
+            
+            for(int i = 0; i < size; i++)
+            {
+                vector<int> helper = gates.front();
+                gates.pop();
+                int row = helper[0];
+                int col = helper[1];
+                
+                if(row > 0 && rooms[row - 1][col] == INT_MAX)
+                {
+                    rooms[row - 1][col] = rooms[row][col] + 1;
+                    vector<int> h;
+                    h.push_back(row-1);
+                    h.push_back(col);
+                    gates.push(h);
+                }
+                if(col > 0 && rooms[row][col - 1] == INT_MAX)
+                {
+                    rooms[row][col - 1] = rooms[row][col] + 1;
+                    vector<int> h;
+                    h.push_back(row);
+                    h.push_back(col - 1);
+                    gates.push(h);
+                }
+                if(row < rooms.size() - 1 && rooms[row + 1][col] == INT_MAX)
+                {
+                    rooms[row + 1][col] = rooms[row][col] + 1;
+                    vector<int> h;
+                    h.push_back(row+1);
+                    h.push_back(col);
+                    gates.push(h);
+                }
+                if(col < rooms[0].size() - 1 && rooms[row][col + 1] == INT_MAX)
+                {
+                    rooms[row][col + 1] = rooms[row][col] + 1;
+                    vector<int> h;
+                    h.push_back(row);
+                    h.push_back(col + 1);
+                    gates.push(h);
+                }
+            }
+        }
+    }
+};
