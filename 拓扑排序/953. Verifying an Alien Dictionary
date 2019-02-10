@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool isAlienSorted(vector<string>& words, string order) {
+        map<char, int> dict;
+        for(int i = 0; i < order.size(); i++)
+        {
+            dict[order[i]] = i;
+        }
+        
+        for(int k = 0; k < words.size() - 1; k++)
+        {
+            string s1 = words[k];
+            string s2 = words[k+1];
+            int i = 0;
+            int j = 0;
+            bool flag = false;
+            while(i < s1.size() && j < s2.size())
+            {
+                if(s1[i] != s2[j])
+                {
+                    if(dict[s1[i]] > dict[s2[j]])
+                    {
+                        return false;
+                    }
+                    else 
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                i++;
+                j++;
+            }
+            if(flag == false && i != s1.size())
+                return false;
+        }
+        
+        return true;
+    }
+};
