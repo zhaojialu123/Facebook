@@ -9,9 +9,9 @@ public:
             int mid = start + (end - start)/2;
             
             if(nums[mid] > nums[mid-1])
-                start++;
+                start = mid;
             else
-                end--;
+                end = mid;
         }
         
         if(nums[start] < nums[end])
