@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> verticalOrder(TreeNode* root) {
+        if(root == NULL)
+            return {};
+        map<int, vector<int>> dict;
+        queue<int> val;
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        val.push(0);
+        while(!q.empty())
+        {
+            int size = q.size();
+            for(int i = 0; i < size; i++)
+            {
+                TreeNode* temp = q.front();
+                q.pop();
+                int helper = val.front();
+                val.pop();
+                dict[helper].push_back(temp -> val);
+                
+                if(temp -> left != NULL)
+                {
+                  q.push(temp -> left);
+                    val.push(helper - 1);  
+                }
+                if(temp -> right != NULL)
+                {
+                    q.push(temp -> right);
+                val.push(helper + 1);
+                }
+                    
+            }
+        }
+        
+        vector<vector<int>> res;
+        
+        for(map<int, vector<int>>:: iterator it = dict.begin(); it != dict.end(); it++)
+        {
+            res.push_back(it -> second);
+        }
+        
+        return res;
+    }
+};
