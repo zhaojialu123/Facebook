@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int res = 0;
+        
+        for(int i = 0; i < nums.size(); i++)
+        {
+            res = res ^ nums[i];
+        }
+        
+        return res;
+    }
+};
+
+
+Explaination: 
+1) XOR is commutative, a ^ b = b ^ a. 2) a number XOR by another number twice makes no change on original number, a ^ b ^ b = a
+Therefore, if a number appears twice in the array, it makes no change to result. And if a number is unique, since 0 ^ unique = unique, so result = unique
+
+
