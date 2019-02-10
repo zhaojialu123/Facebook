@@ -1,0 +1,60 @@
+class Solution {
+public:
+    int myAtoi(string str) {
+        string number = "";
+        bool positive = true;
+        int i = 0;
+        while(str[i] == ' ')
+        {
+            i++;
+        }
+        
+        if(str[i] == '-' && isdigit(str[i + 1]))
+        {
+            positive = false;
+            i++;
+        }
+        if(str[i] == '+' && isdigit(str[i + 1]))
+        {
+            positive = true;
+            i++;
+        }
+        while(isdigit(str[i]))
+        {
+            number = number + str[i];
+            i++;
+        }
+        
+        if(number == "")
+            return 0;
+        
+        long res = 0;
+        int index = 0;
+        while(number[index] == '0')
+        {
+            index++;
+        }
+        
+        for(int i = index; i < number.size(); i++)
+        {
+            res = res * 10 + number[i] - '0';
+            if(res > INT_MAX)
+        {
+            if(positive)
+                return INT_MAX;
+            else
+                return INT_MIN;
+        }
+        
+        }
+    
+        
+        if(positive)
+            return (int)res;
+        else
+            return 0 - (int)res;
+        
+        
+        
+    }
+};
