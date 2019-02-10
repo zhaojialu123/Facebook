@@ -1,0 +1,41 @@
+#include <vector>. From 1point 3acres bbs
+#include <iostream>
+using namespace std;
+
+int leftMostColumn(vector<vector<int> >& nums) {
+        int row = nums.size();
+        if (row==0||nums[0].size()==0||nums[0].size()==1)
+                return -1;
+        int col = nums[0].size();
+        int i = 0;
+        int j = col-1;
+        while (i<=j) {
+                int mid = i+(j-i)/2;
+                bool flag = false;
+                for (int k = 0; k<row; ++k) {
+                        if (nums[k][mid]==1) {
+                                flag = true;. 1point3acres
+                                break;
+                        }
+                }
+                if (flag) {
+                        j = mid-1;
+                }
+                else {
+                        i = mid+1;
+                }
+        }
+        if (i==0)
+                return -1;
+        return i;
+}
+
+int main() {
+        vector<vector<int> > nums;
+        nums.push_back(vector<int>{0, 0, 1, 1});
+        nums.push_back(vector<int>{0, 0, 0, 1});
+        nums.push_back(vector<int>{0, 0, 1, 1});
+        nums.push_back(vector<int>{0, 0, 0, 0});
+        cout << leftMostColumn(nums) << endl;
+        return 0;
+}
