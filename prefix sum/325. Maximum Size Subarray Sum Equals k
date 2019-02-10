@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxSubArrayLen(vector<int>& nums, int k) {
+        map<int, int> dict;
+        dict[0] = -1;
+        int sum = 0;
+        int res = 0;
+        
+        for(int i = 0; i < nums.size(); i++)
+        {
+            sum = sum + nums[i];
+            if(dict.count(sum - k))
+            {
+                res = max(res, i - dict[sum-k]);
+            }
+            
+            if(!dict.count(sum))
+                dict[sum] = i;
+        }
+        
+        return res;
+    }
+};
