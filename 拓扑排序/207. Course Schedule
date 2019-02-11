@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        if(prerequisites.size() == 0)
+            return true;
+        
+        map<int, vector<int>> courses;
+        vector<int> indegrees(numCourses);
+        
+        for(int i = 0; i < prerequisites.size(); i++)
+        {
+            courses[prerequisites[i].second].push_back(prerequisites[i].first);
+            indegrees[prerequisites[i].first]++;
+        }
+        
+        queue<int> sequence;
+        int count = 0;
+        
+        for(int i = 0; i < indegrees.size(); i++)
+        {
+            if(indegrees[i] == 0)
+                sequence.push(i);
+        }
+        
+        while(!sequence.empty())
+        {
+            int current = sequence.front();
+            sequence.pop();
+            count++;
+            
+            for(int i = 0; i < courses[current].size(); i++)
+            {
+                if(--indegrees[courses[current][i]] == 0)
+                    sequence.push(courses[current][i]);
+            }
+        }
+        
+        if(count == numCourses)
+            return true;
+        else
+            return false;
+    }
+};
