@@ -11,3 +11,44 @@ public:
         return vector<int>(arr.begin() + left, arr.begin() + left + k);
     }
 };
+
+
+
+// priority queue
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        auto comp = [&] (int i, int j) -> bool
+        {
+            if(abs(i - x) > abs(j - x))
+                return true;
+            else if(abs(i - x) < abs(j - x))
+                return false;
+            else
+            {
+                if(i > j)
+                    return true;
+                else
+                    return false;
+            }
+                
+        };
+        priority_queue<int, vector<int>, decltype(comp)> pq(comp);
+        
+        for(int i = 0; i < arr.size(); i++)
+            pq.push(arr[i]);
+        
+        
+        vector<int> ans;
+        
+        for(int i = 0; i < k; i++)
+        {
+            int first = pq.top();
+            pq.pop();
+            ans.push_back(first);
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+    
+};
