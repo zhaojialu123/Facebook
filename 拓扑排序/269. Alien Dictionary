@@ -1,0 +1,66 @@
+class Solution {
+public:
+    string alienOrder(vector<string>& words) {
+        if(words.size() < 1)
+            return "";
+        
+        map<char, set<char>> dict;
+        set<char> letters;
+        vector<int>indegrees(26,0);
+        
+        for(int i = 0; i < words.size(); i++)
+        {
+            for(int j = 0; j < words[i].size(); j++)
+                letters.insert(words[i][j]);
+        }
+        
+        for(int i = 0; i < words.size() - 1; i++)
+        {
+            string s1 = words[i];
+            string s2 = words[i+1];
+            
+            for(int j = 0; j < min(s1.size(), s2.size()); j++)
+            {
+                if(s1[j] == s2[j])
+                    continue;
+                else
+                {
+                    if(!dict[s1[j]].count(s2[j]))
+                    {
+                        dict[s1[j]].insert(s2[j]);
+                        indegrees[s2[j] - 'a']++;
+                    }
+                    break;
+                }
+            }
+        }
+        
+        queue<char> sequence;
+        for(int i = 0; i < indegrees.size(); i++)
+        {
+            if(indegrees[i] == 0 && letters.count((char)(i+'a')))
+                sequence.push((char)(i + 'a'));
+        }
+        
+        int count = 0;
+        string res = "";
+        while(!sequence.empty())
+        {
+            char first = sequence.front();
+            sequence.pop();
+            count++;
+            res = res + first;
+            
+            for(char c: dict[first])
+            {
+                if(--indegrees[c - 'a'] == 0)
+                    sequence.push(c);
+            }
+            
+        }
+        if(count == letters.size())
+            return res;
+        else
+            return "";
+    }
+};
