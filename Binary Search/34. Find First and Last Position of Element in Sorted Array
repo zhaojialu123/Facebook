@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.size() == 0) // don't forget the corner case
+            return {-1,-1};
+        // find the first one
+        int first;
+        int start = 0;
+        int end = nums.size() - 1;
+        while(start + 1 < end)
+        {
+            int mid = start + (end - start)/2;
+            if(nums[mid] < target)
+                start = mid;
+            else
+                end = mid;
+        }
+        
+        if(nums[start] == target)
+            first = start;
+        else if(nums[end] == target)
+            first = end;
+        else
+            first = -1;
+        
+        int last;
+        start = 0;
+        end = nums.size() - 1;
+        while(start + 1 < end)
+        {
+            int mid = start + (end - start)/2;
+            if(nums[mid] <= target)
+                start = mid;
+            else
+                end = mid;
+        }
+        
+        if(nums[end] == target)
+            last = end;
+        else if(nums[start] == target)
+            last = start;
+        else
+            last = -1;
+        
+        
+        vector<int> res;
+        res.push_back(first);
+        res.push_back(last);
+        return res;
+        
+    }
+};
