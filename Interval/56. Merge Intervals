@@ -35,7 +35,7 @@ public:
             }
         }
         
-        res.push_back(temp);
+        res.push_back(temp); // note: don't forget to push back the last one 
         return res;
     }
 };
