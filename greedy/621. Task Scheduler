@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        map<char, int> m;
+        int maximum = 0;
+        for(int i = 0; i < tasks.size(); i++)
+        {
+            m[tasks[i]]++;
+        }
+        
+        int temp = 0;
+        for(map<char, int>:: iterator it = m.begin(); it != m.end(); it++)
+        {
+            if(it -> second > temp)
+            {
+                temp = it -> second;
+            }
+        }
+        
+        int res = (n+1)*(temp - 1);
+        int count = 0;
+        
+        for(map<char, int>:: iterator it = m.begin(); it != m.end(); it++)
+        {
+            if(it -> second == temp)
+            {
+                count++;
+            }
+        }
+        
+        int size = tasks.size();
+        res = max(res + count, size);
+        return res;
+    }
+};
