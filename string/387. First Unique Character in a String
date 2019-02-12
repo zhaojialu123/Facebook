@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        vector<int> dict(256,0);
+        for(int i = 0; i < s.size(); i++)
+            dict[s[i]]++;
+        
+        for(int i = 0; i< s.size();i++)
+            if(dict[s[i]]==1) 
+                return i;
+        
+        return -1;
+    }
+};
+
+
+Follow up: 和原题不同的是⾯试官要求返回字符，以及unique char不存在的情况怎
+么处理。
