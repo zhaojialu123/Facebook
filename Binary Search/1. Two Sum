@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> res;
+        if(nums.size() == 0)
+            return res;
+        
+        map<int, int> dict;
+        
+        for(int i = 0; i < nums.size(); i++)
+        {
+            dict[nums[i]] = i;
+        }
+        
+        for(int i = 0; i < nums.size(); i++)
+        {
+            int new_t = target - nums[i];
+            if(dict.count(new_t) && dict[new_t] != i)
+            {
+                res.push_back(i);
+                res.push_back(dict[new_t]);
+                return res;
+            }
+        }
+        
+        return res;
+    }
+};
