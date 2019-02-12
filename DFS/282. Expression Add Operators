@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<string> addOperators(string num, int target) {
+        vector<string> ans;
+        dfs(num, target, 0, "", 0, 0, ans);
+        return ans;
+    }
+    
+    void dfs(string num, int target, int pos, string exp, long prev, long curr, vector<string>& ans)
+    {
+       if(pos == num.size())
+       {
+           if(curr == target)
+               ans.push_back(exp);
+       }
+        
+        for(int i = 1;i <= num.size() - pos; i++)
+        {
+            string t = num.substr(pos, i);
+            if(t[0] == '0' && t.size() > 1)
+                break;
+            
+            long n = stol(t);
+            
+            if(n > INT_MAX)
+                break;
+            if(pos == 0)
+            {
+                dfs(num, target, i, t, n, n, ans);
+                continue;
+            }
+            
+            dfs(num, target, pos + i, exp + '+' + t, n, curr + n, ans);
+            dfs(num, target, pos + i, exp + '-' + t, -n, curr - n, ans);
+            dfs(num, target, pos + i, exp + '*' + t, prev*n, curr - prev + prev*n, ans);
+        }
+    }
+};
