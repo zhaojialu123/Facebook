@@ -1,0 +1,60 @@
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> st;
+        long result = 0;
+        int index = 0;
+        char sign = '+';
+        
+        while(index < s.size())
+        {
+            if(isdigit(s[index]))
+            {
+                while(isdigit(s[index]))
+                {
+                    result = result* 10 + s[index] - '0';
+                    index++;
+                }
+                if(sign == '+')
+                {
+                    st.push(result);
+                    result = 0;
+                }
+                else if(sign == '-')
+                {
+                    st.push(-result);
+                    result = 0;
+                }
+                else if(sign == '*')
+                {
+                    result = st.top() * result;
+                    st.pop();
+                    st.push(result);
+                    result = 0;
+                }
+                else if(sign == '/')
+                {
+                    result = st.top() / result;
+                    st.pop();
+                    st.push(result);
+                    result = 0;
+                }
+            }
+            else if(s[index] == ' ')
+            {
+                index++;
+            }
+            else
+                sign = s[index++];
+        }
+        
+        int ans = 0;
+        while(!st.empty())
+        {
+            ans = ans + st.top();
+            st.pop();
+        }
+        
+        return ans;
+    }
+};
