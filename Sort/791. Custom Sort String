@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string customSortString(string S, string T) {
+        string s1 = "";
+        string s2 = "";
+        map<char, int> dict;
+        for(int i = 0; i < S.size(); i++)
+        {
+            dict[S[i]] = i;
+        }
+        
+        for(int i = 0; i < T.size(); i++)
+        {
+            if(dict.count(T[i]))
+            {
+                s1 = s1 + T[i];
+                
+            }
+            else
+                s2 = s2 + T[i];
+        }
+        
+        sort(s1.begin(), s1.end(), [&dict](char c1, char c2) -> bool
+             {
+                 return dict[c1] < dict[c2];
+             });
+        return s1 + s2;
+    }
+};
