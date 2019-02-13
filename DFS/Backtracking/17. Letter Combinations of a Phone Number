@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if (digits.empty()) return {};
+        vector<vector<char>> collection(10);
+        collection[0] = {};
+        collection[1] = {};
+        collection[2] = {'a', 'b', 'c'};
+        collection[3] = {'d', 'e', 'f'};
+        collection[4] = {'g', 'h', 'i'};
+        collection[5] = {'j', 'k', 'l'};
+        collection[6] = {'m', 'n', 'o'};
+        collection[7] = {'p', 'q', 'r', 's'};
+        collection[8] = {'t', 'u', 'v'};
+        collection[9] = {'w', 'x', 'y', 'z'};
+        vector<string> result;
+        string current = "";
+        int level = 0;
+        dfs(digits, result, current, level, collection);
+        return result;
+    }
+   void dfs(string &digits, vector<string> &result, string &current, int level, vector<vector<char>> &collection) 
+   {
+       if(level == digits.length())
+       {
+          result.push_back(current);
+           return;
+       }
+       for(char c: collection[digits[level] -'0'])
+       {
+          current.push_back(c);
+          dfs(digits, result, current, level + 1, collection); 
+           current.pop_back();
+       }
+   }
+};
