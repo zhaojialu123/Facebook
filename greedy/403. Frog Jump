@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool canCross(vector<int>& stones) {
+        map<int, set<int>> state;
+        for(int i = 0; i < stones.size(); i++)
+        {
+            state[stones[i]] = set<int> {};
+        }
+        state[stones[0]].insert(0);
+        
+        for(int i = 0; i < stones.size(); i++)
+        {
+            for(int laststep: state[stones[i]])
+            {
+                for(int nextstep = laststep -1; nextstep <= laststep + 1; nextstep++)
+                {
+                    if(nextstep > 0 && state.count(stones[i] + nextstep))
+                        state[stones[i] + nextstep].insert(nextstep);
+                }
+            }
+        }
+        
+        if(state[stones[stones.size() -1]].size() == 0)
+            return false;
+        else
+            return true;
+    }
+};
