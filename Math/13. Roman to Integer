@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+       map<char, int> dict;
+        dict.insert(make_pair('I', 1));
+        dict.insert(make_pair('V', 5));
+        dict.insert(make_pair('X', 10));
+        dict.insert(make_pair('L', 50));
+        dict.insert(make_pair('C', 100));
+        dict.insert(make_pair('D', 500));
+        dict.insert(make_pair('M', 1000));
+       
+        int result = 0;
+        
+        for(int i = 0; i < s.size(); i++)
+        {
+            result = result + dict[s[i]];
+            if(i > 0 && dict[s[i]] > dict[s[i-1]])
+                result = result - 2* dict[s[i - 1]];
+        }
+        
+        return result;
+    }
+};
