@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        map<int, int> times;
+        for(int i = 0; i < nums.size(); i++)
+            times[nums[i]]++;
+        
+        auto comp = [&] (int i1, int i2) 
+        {
+            return times[i1] < times[i2];
+        };
+        priority_queue<int, vector<int>, decltype(comp)> pq(comp);
+        
+        for(map<int, int>:: iterator it = times.begin(); it != times.end(); it++)
+            pq.push(it -> first);
+        vector<int> res;
+        for(int i = 0; i < k; i++)
+        {
+            res.push_back(pq.top());
+            pq.pop();
+        }
+        
+        return res;
+    }
+};
