@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        vector<int> res(n, 0);
+        stack<int> s;
+        int pre_time = 0;
+        for(int i = 0; i < logs.size(); i++)
+        {
+            int found1 = logs[i].find(":");
+            int found2 = logs[i].find_last_of(":");
+            
+            int id = stoi(logs[i].substr(0, found1));
+            string type = logs[i].substr(found1 + 1, found2 - found1 - 1);
+            int time = stoi(logs[i].substr(found2+1));
+            
+            if(!s.empty())
+                res[s.top()] = res[s.top()] + time - pre_time;
+            
+            pre_time = time;
+            if(type == "start")
+                s.push(id);
+            else
+            {
+                res[s.top()]++;
+                pre_time++;
+                s.pop();
+            }
+                
+        }
+        
+        return res;
+    }
+};
