@@ -1,0 +1,115 @@
+class Solution {
+public:
+    string validIPAddress(string IP) {
+        istringstream ss(IP);
+        string t;
+        
+        if(IP.find('.') != string::npos)// IPv4
+        {
+            int count = 0;
+            while(getline(ss, t, '.'))
+            {
+                count++;
+                
+                if(count > 4 || t.size() > 3 || (t.size() > 1 && t[0] == '0') || t.empty())
+                    return "Neither";
+                
+                for(char c: t)
+                {
+                    if(c < '0' || c > '9')
+                        return "Neither";
+                }
+                
+                int val = stoi(t);
+                if(val < 0 || val > 255)
+                    return "Neither";
+            }
+            if(count == 4 && IP.back() != '.')
+                return "IPv4";
+            else 
+                return "Neither";
+        }
+        else
+        {
+            int count = 0;
+            while(getline(ss, t, ':'))
+            {
+                count++;
+                
+                if(count > 8 || t.size() > 4 || t.empty())
+                    return "Neither";
+                
+                for(char c: t)
+                {
+                    if(!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F'))
+                        return "Neither";
+                }
+                
+                
+            }
+            if(count == 8 && IP.back() != ':')
+                return "IPv6";
+            else
+                return "Neither";
+                       
+        }
+            
+    }
+};class Solution {
+public:
+    string validIPAddress(string IP) {
+        istringstream ss(IP);
+        string t;
+        
+        if(IP.find('.') != string::npos)// IPv4
+        {
+            int count = 0;
+            while(getline(ss, t, '.'))
+            {
+                count++;
+                
+                if(count > 4 || t.size() > 3 || (t.size() > 1 && t[0] == '0') || t.empty())
+                    return "Neither";
+                
+                for(char c: t)
+                {
+                    if(c < '0' || c > '9')
+                        return "Neither";
+                }
+                
+                int val = stoi(t);
+                if(val < 0 || val > 255)
+                    return "Neither";
+            }
+            if(count == 4 && IP.back() != '.')
+                return "IPv4";
+            else 
+                return "Neither";
+        }
+        else
+        {
+            int count = 0;
+            while(getline(ss, t, ':'))
+            {
+                count++;
+                
+                if(count > 8 || t.size() > 4 || t.empty())
+                    return "Neither";
+                
+                for(char c: t)
+                {
+                    if(!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F'))
+                        return "Neither";
+                }
+                
+                
+            }
+            if(count == 8 && IP.back() != ':')
+                return "IPv6";
+            else
+                return "Neither";
+                       
+        }
+            
+    }
+};
