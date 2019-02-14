@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        map<char, int> dict;
+        int count = k;
+    
+        int start = 0;
+        int length = 0;
+        for(int end = 0; end < s.size(); end++)
+        {
+            if(dict[s[end]]++ == 0)
+            {
+                count--;
+            }
+            
+
+            while(count < 0)
+            {
+                
+                if(dict[s[start]]-- == 1)
+                    count++;
+                
+                start++;
+            }
+            
+            length = max(end - start + 1, length);
+        
+        }
+        return length;
+    }
+};
