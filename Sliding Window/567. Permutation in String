@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        vector<int> dict(128,0);
+        for(int i = 0; i < s1.size(); i++)
+        {
+            dict[s1[i]]++;
+        }
+        
+        int start = 0;
+        int counter = s1.size(); 
+        
+        for(int end = 0; end < s2.size(); end++)
+        {
+            if(dict[s2[end]]-- > 0)
+            {
+                counter--;
+            }
+            
+            while(counter == 0)
+            {
+                if(end - start + 1 == s1.size())
+                    return true;
+                
+                if(dict[s2[start]]++ == 0)
+                {
+                    counter++;
+                }
+                start++;
+            }
+        }
+        return false;
+    }
+};
