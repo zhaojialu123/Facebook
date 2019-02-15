@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void reverseWords(string &s) {
+    
+        istringstream ss(s);
+        string token;
+        string res = "";
+        while(getline(ss, token, ' '))
+        {
+            if(token != "")
+                res = token + " " + res;
+        }
+        if(res== "")
+        {
+            s = "";
+            return;
+        }
+    
+        res.pop_back();
+        s = res;
+        
+        
+    }
+};
