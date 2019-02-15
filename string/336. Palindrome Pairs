@@ -1,0 +1,67 @@
+class Solution {
+public:
+    vector<vector<int>> palindromePairs(vector<string>& words) {
+        map<string, int> dict;
+        for(int i = 0; i < words.size(); i++)
+        {
+            string temp = words[i];
+            reverse(temp.begin(), temp.end());
+            dict[temp] = i;
+        }
+        
+        vector<vector<int>> res;
+        if(dict.count(""))
+        {
+            for(int i = 0; i < words.size(); i++)
+            {
+                if(i == dict[""])
+                    continue;
+                if(isPalindrome(words[i]))
+                {
+                    vector<int> helper;
+                    helper.push_back(dict[""]);
+                    helper.push_back(i);
+                    res.push_back(helper);
+                }
+            }
+        }
+        
+        for(int i = 0; i < words.size(); i++)
+        {
+            for(int j = 0; j < words[i].size(); j++)
+            {
+                string left = words[i].substr(0,j);
+                string right = words[i].substr(j);
+                if(dict.count(left) && isPalindrome(right) && dict[left] != i)
+                {
+                    vector<int> helper;
+                    helper.push_back(i);
+                    helper.push_back(dict[left]);
+                    res.push_back(helper);
+                }
+                if(dict.count(right) && isPalindrome(left) && dict[right] != i)
+                {
+                    vector<int> helper;
+                    helper.push_back(dict[right]);
+                    helper.push_back(i);
+                    res.push_back(helper);
+                }
+            }
+        }
+        return res;
+    }
+    
+    bool isPalindrome(string s)
+    {
+        int start = 0;
+        int end = s.size() -1;
+        while(start < end)
+        {
+            if(s[start] != s[end])
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+};
